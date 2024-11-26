@@ -33,7 +33,8 @@ const RockPaperScissors = () => {
     ) {
       setMyScore(myScore + 1);
     }else if(user === computer) {
-      
+      setMyScore(prevScore => prevScore )
+      setCompScore(prevScore => prevScore )
     } 
     else {
       setCompScore(compScore + 1);
@@ -44,6 +45,8 @@ const RockPaperScissors = () => {
     }else if(myScore <= 10 && compScore >= 10) {
       setResult("You Loss!")
       setGameOver(true)
+    } else if(myScore === 10 && compScore === 10) {
+      setResult("Its a Draw")
     }
   };
 
@@ -79,7 +82,7 @@ const RockPaperScissors = () => {
               <img
                 src={choice.image}
                 alt={choice.name}
-                className="w-[180px] h-[180px] rounded-full object-cover "
+                className="w-[180px] hover:scale-110 hover:shadow  h-[180px] rounded-full object-cover "
               />
             </button>
           ))}
