@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Score from "./Score";
 import Choice from "./Choice";
 
@@ -14,35 +14,18 @@ const RockPaperScissors = () => {
   const [myScore, setMyScore] = useState(0);
   const [compScore, setCompScore] = useState(0);
   const [result, setResult] = useState("");
-  const [time, setTime] = useState(30);
-  const [gameOver, setGameOver] = useState(false);
-
-  const timer = useRef(null);
-
-  useEffect(() => {
-    if (time > 0) {
-      timer.current = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (time === 0) {
-      clearInterval(timer.current);
-      setGameOver(true);
-      determineWinner();
-    }
-
-    return () => clearInterval(timer.current);
-  }, [time]);
+  const [gameOver, setGameOver] = useState(false)
 
   const playGame = (userSelect) => {
-    if (time === 0) return;
     const randomIndex = Math.floor(Math.random() * choices.length);
     const computerSelect = choices[randomIndex];
 
     setUserSelection(userSelect);
     setComputerSelection(computerSelect);
-    winner(userSelect.name, computerSelect.name);
+    determineWinner(userSelect.name, computerSelect.name);
   };
-  const winner = (user, computer) => {
+
+  const determineWinner = (user, computer) => {
     if (
       (user === "Rock" && computer === "Scissors") ||
       (user === "Paper" && computer === "Rock") ||
@@ -52,15 +35,12 @@ const RockPaperScissors = () => {
     } else {
       setCompScore(compScore + 1);
     }
-  };
-
-  const determineWinner = () => {
-    if (myScore > compScore) {
-      setResult("You are the Winner");
-    } else if (myScore < compScore) {
-      setResult("Computer is the Winner");
-    } else {
-      setResult("Its a Tie");
+    if(myScore >= 10 && compScore <= 10) {
+      setResult("Congratulations You Won!")
+      setGameOver(true)
+    }else if(myScore <= 10 && compScore >= 10) {
+      setResult("You Loss!")
+      setGameOver(true)
     }
   };
 
@@ -70,8 +50,7 @@ const RockPaperScissors = () => {
     setResult("");
     setUserSelection("");
     setComputerSelection("");
-    setTime(30);
-    setGameOver(false);
+    setGameOver(false)
   };
 
   return (
@@ -81,7 +60,6 @@ const RockPaperScissors = () => {
           <h1 className="text-[20px] uppercase">Rock Paper Scissors Game</h1>
         </div>
         <div>
-          <Score lable="Timer" score={time} />
           <Score lable="Computer Score" score={compScore} />
           <Score lable="Your Score" score={myScore} />
         </div>
@@ -91,31 +69,28 @@ const RockPaperScissors = () => {
           {choices.map((choice) => (
             <button
               className="m-4"
-              key={choice}
+              key={choice.name}
               onClick={() => playGame(choice)}
-              disabled={time === 0 || gameOver}
+              disabled={gameOver}
             >
               <img
                 src={choice.image}
                 alt={choice.name}
-                className="w-40 h-40 rounded-full object-cover "
+                className="w-[180px] h-[180px] rounded-full object-cover "
               />
             </button>
           ))}
         </div>
         <div>
+          <h2 className="text-[25px] mb-10 uppercase">The Wining Score is <b>10</b></h2>
           <Choice label="Your Choice" choice={userSelection.name} />
           <Choice label="Computer Choice" choice={computerSelection.name} />
-          <h2 className="text-[20px] uppercase mt-10">
-            {gameOver && (
-                <Choice label="Result" choice={result} />
-            )}
-          </h2>
+            <h2 className="text-[20px] mt-10">{result}</h2>
           <div className="flex justify-center items-center flex-col">
-            {result && gameOver && (
+            {result && (
               <button
-                className="fixed bottom-14  bg-white py-2 px-4 rounded-md text-black"
-                onClick={handleRefresh}
+              className="fixed bottom-14 bg-white py-2 px-4 rounded-md text-black"
+              onClick={handleRefresh}
               >
                 Play Again
               </button>
