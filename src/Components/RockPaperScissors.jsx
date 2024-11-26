@@ -32,7 +32,10 @@ const RockPaperScissors = () => {
       (user === "Scissors" && computer === "Paper")
     ) {
       setMyScore(myScore + 1);
-    } else {
+    }else if(user === computer) {
+      
+    } 
+    else {
       setCompScore(compScore + 1);
     }
     if(myScore >= 10 && compScore <= 10) {
@@ -60,8 +63,8 @@ const RockPaperScissors = () => {
           <h1 className="text-[20px] uppercase">Rock Paper Scissors Game</h1>
         </div>
         <div>
-          <Score lable="Computer Score" score={compScore} />
           <Score lable="Your Score" score={myScore} />
+          <Score lable="Computer Score" score={compScore} />
         </div>
       </div>
       <div className="flex justify-center items-center flex-col ">
@@ -85,7 +88,9 @@ const RockPaperScissors = () => {
           <h2 className="text-[25px] mb-10 uppercase">The Wining Score is <b>10</b></h2>
           <Choice label="Your Choice" choice={userSelection.name} />
           <Choice label="Computer Choice" choice={computerSelection.name} />
-            <h2 className="text-[20px] mt-10">{result}</h2>
+            <h2 className={`text-[20px] mt-10 ${
+              result === "Congratulations You Won!" ? "text-green-500" : "text-red-500"
+            }`}>{result}</h2>
           <div className="flex justify-center items-center flex-col">
             {result && (
               <button
