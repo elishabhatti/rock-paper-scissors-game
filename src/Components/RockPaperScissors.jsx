@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import Score from "./Score";
+import Choice from "./Choice";
 
 const RockPaperScissors = () => {
   const choices = [
@@ -33,12 +35,12 @@ const RockPaperScissors = () => {
 
   const playGame = (userSelect) => {
     if (time === 0) return;
-      const randomIndex = Math.floor(Math.random() * choices.length);
-      const computerSelect = choices[randomIndex];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    const computerSelect = choices[randomIndex];
 
-      setUserSelection(userSelect);
-      setComputerSelection(computerSelect);
-      winner(userSelect.name, computerSelect.name);
+    setUserSelection(userSelect);
+    setComputerSelection(computerSelect);
+    winner(userSelect.name, computerSelect.name);
   };
   const winner = (user, computer) => {
     if (
@@ -76,19 +78,12 @@ const RockPaperScissors = () => {
     <div className="bg-gray-800 text-white h-[100vh] ">
       <div className="w-full bg-slate-600 text-white flex justify-between items-center py-4 px-8 mb-10">
         <div>
-          <h1 className="text-2xl uppercase">Rock Paper Scissors Game</h1>
+          <h1 className="text-[20px] uppercase">Rock Paper Scissors Game</h1>
         </div>
-        <div></div>
         <div>
-          <h2>
-            User Score: <b> {myScore}</b>
-          </h2>
-          <h2>
-            Computer Score: <b>{compScore}</b>
-          </h2>
-          <h2>
-            Timer: <b>{time}</b>
-          </h2>
+          <Score lable="Timer" score={time} />
+          <Score lable="Computer Score" score={compScore} />
+          <Score lable="Your Score" score={myScore} />
         </div>
       </div>
       <div className="flex justify-center items-center flex-col ">
@@ -109,17 +104,11 @@ const RockPaperScissors = () => {
           ))}
         </div>
         <div>
-          <h2 className="text-[20px] uppercase">
-            Your Choice: <b>{userSelection.name}</b>
-          </h2>
-          <h2 className="text-[20px] uppercase">
-            Computer Choice: <b>{computerSelection.name}</b>
-          </h2>
+          <Choice label="Your Choice" choice={userSelection.name} />
+          <Choice label="Computer Choice" choice={computerSelection.name} />
           <h2 className="text-[20px] uppercase mt-10">
             {gameOver && (
-              <p>
-                Result:<b>{result}</b>
-              </p>
+                <Choice label="Result" choice={result} />
             )}
           </h2>
           <div className="flex justify-center items-center flex-col">
