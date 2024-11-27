@@ -6,3 +6,6 @@
     font-family: 'Poppins', sans-serif;
     transition: all 0.35s;
 }
+img {
+    border: 5px solid white;
+}

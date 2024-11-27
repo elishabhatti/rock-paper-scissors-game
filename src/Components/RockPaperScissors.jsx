@@ -22,6 +22,7 @@ const RockPaperScissors = () => {
 
     setUserSelection(userSelect);
     setComputerSelection(computerSelect);
+
     determineWinner(userSelect.name, computerSelect.name);
   };
 
@@ -59,8 +60,11 @@ const RockPaperScissors = () => {
     <div className="bg-gray-800 text-white h-[100vh] ">
       <div className="w-full bg-slate-600 text-white flex justify-between items-center py-4 px-8 mb-10">
         <div>
-          <h1 className="text-[20px] uppercase">R.P.S Game</h1>
+          <h1 className="text-[30px] uppercase">R.P.S Game</h1>
         </div>
+        <h2 className="text-[25px] uppercase">
+          The Wining Score is <b>10</b>
+        </h2>
         <div>
           <Score lable="Your Score" score={myScore} />
           <Score lable="Computer Score" score={compScore} />
@@ -84,11 +88,8 @@ const RockPaperScissors = () => {
           ))}
         </div>
         <div>
-          <h2 className="text-[25px] mb-10 uppercase">
-            The Wining Score is <b>10</b>
-          </h2>
-          <Choice label="Your Choice" choice={userSelection.name} />
-          <Choice label="Computer Choice" choice={computerSelection.name} />
+          <Choice label="You Selected" choice={userSelection.name} />
+          <Choice label="Computer Selected" choice={computerSelection.name} />
           <h2
             className={`text-[20px] mt-10 ${
               result === "Congratulations You Won!"
@@ -97,7 +98,6 @@ const RockPaperScissors = () => {
             }`}
           >
             {" "}
-            <span className="text-white">Result: </span>
             {result}
           </h2>
           <div className="flex justify-center items-center flex-col">
